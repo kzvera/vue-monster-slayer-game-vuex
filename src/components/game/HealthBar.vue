@@ -31,20 +31,17 @@ export default {
     },
     methods: {
       getHealthbarStyles(playerType) {
-        if (playerType == 'player') {
-          if (this.playerHealth < 0) {
+        const playerHealthStyles = playerType == 'player' ? this.playerHealth : this.monsterHealth;
+
+        switch (true) {
+          case (playerHealthStyles < 0):
             return {width: '0%'};
-          }
-          return {width: this.playerHealth + '%'}
-        } else if (playerType == 'monster') {
-          if (this.monsterHealth < 0) {
-            return {width: '0%'};
-          } else if (this.monsterHealth < 25 && this.monsterHealth > 10) {
-            return {'background-color': 'orange', width: this.monsterHealth + '%'}
-          } else if (this.monsterHealth < 10) {
-            return {'background-color': 'red', width: this.monsterHealth + '%'}
-          }
-          return {width: this.monsterHealth + '%'}
+          case (playerHealthStyles <= 30 && playerHealthStyles > 15):
+            return {'background-color': 'orange', width: playerHealthStyles + '%'};
+          case (playerHealthStyles <= 15):
+            return {'background-color': 'red', width: playerHealthStyles + '%'};
+          default:
+            return {width: playerHealthStyles + '%'};
         }
       }
     }

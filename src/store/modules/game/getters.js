@@ -3,9 +3,7 @@ export default {
         return state.players;
     },
     playerHealth(state) {
-        if (state.playerHealth > 100) {
-            state.playerHealth = 100;
-        }
+        state.playerHealth = Math.min(state.playerHealth, 100);
         return state.playerHealth;
     },
     monsterHealth(state) {

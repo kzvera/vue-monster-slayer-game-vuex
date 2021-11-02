@@ -1,20 +1,20 @@
 export default {
-    async getRandomValue(context, payload) {
+    getRandomValue(context, payload) {
         context.commit('getRandomValue', payload);
     },
-    async addLogMessage(context, payload) {
+    addLogMessage(context, payload) {
         context.commit('addLogMessage', payload);
     },
-    async attackMonster(context) {
+    attackMonster(context) {
         context.commit('attackMonster');
     },
-    async attackPlayer(context) {
+    attackPlayer(context) {
         context.commit('attackPlayer');
     },
-    async attackMonsterSpecial(context) {
+    attackMonsterSpecial(context) {
         context.commit('attackMonsterSpecial');
     },
-    async healPlayerHealth(context) {
+    healPlayerHealth(context) {
         context.commit('healPlayerHealth');
     },
     async attack(context, payload) {
@@ -26,7 +26,7 @@ export default {
             actionValue: context.rootState.game.randomValue
         });
         await context.dispatch('getRandomValue', { min: 8, max: 12 });
-        await context.commit('attackPlayer');
+        context.commit('attackPlayer');
         await context.dispatch('addLogMessage', {
             actionBy: 'monster',
             actionType: 'attack',
@@ -76,13 +76,13 @@ export default {
         });
     },
     async surrender(context) {
-        await context.commit('surrender');
+        context.commit('surrender');
         await context.dispatch('setWinner');
         await context.dispatch('setGameHistory');
         
     },
     startNewGame(context) {
-        context.commit('startNewGame');
+        context.commit('startNewGame', context.rootState.auth.isAuthenticated);
     },
     async loadGameHistory(context) {
         const userId = context.rootState.auth.userId;
@@ -100,26 +100,31 @@ export default {
     async setGameHistory(context) {
         const userId = context.rootState.auth.userId;
 
-        const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}/game-history.json`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                winner: context.rootState.game.gameHistory
+        if (userId != null) {
+            const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}/game-history.json`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    winner: context.rootState.game.gameHistory
+                })
             })
-        })
-
-        const responseData = await response.json();
-
-        if (!response.ok) {
-            const error = new Error(responseData.message || 'Failed to register game history');
-            throw error;
+    
+            const responseData = await response.json();
+    
+            if (!response.ok) {
+                const error = new Error(responseData.message || 'Failed to register game history');
+                throw error;
+            }
         }
+
     },
-    async setWinner(context) {
+    setWinner(context) {
         let date = new Date(Date.now()).toLocaleString().split(', ');
+        
         date = {
             date: date[0],
             time: date[1]
         }
+
         context.commit('setWinner', date);
     }
 }

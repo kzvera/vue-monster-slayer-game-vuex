@@ -8,14 +8,17 @@ export default {
     surrender(state) {
         state.winner = 'monster';
     },
-    startNewGame(state) {
+    startNewGame(state, payload) {
         // reset all parameters to default
         state.playerHealth = 100;
         state.monsterHealth = 100;
         state.currentRound = 0;
         state.winner = null;
         state.logMessages = [];
-        state.gameHistory = [];
+
+        if (payload == false) {
+            state.gameHistory = [];
+        }
     },
     attackMonster(state) {
         state.currentRound++;
@@ -32,11 +35,7 @@ export default {
         state.currentRound++;
 
         // Increase player health by heal amount (up to 100)
-        if ((state.playerHealth += state.randomValue) > 100) {
-            state.playerHealth = 100;
-        } else {
-            state.playerHealth += state.randomValue;
-        }
+        state.playerHealth = Math.min(state.playerHealth + state.randomValue, 100);
     },
     setWinner(state, payload) {
         state.gameHistory.unshift({

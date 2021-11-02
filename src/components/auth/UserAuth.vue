@@ -37,16 +37,14 @@ export default {
         authText() {
             if (this.mode == 'login') {
                 return 'Login';
-            } else {
-                return 'Sign Up';
             }
+            return 'Sign Up';
         },
         altAuthText() {
             if (this.mode == 'login') {
                 return 'Sign Up instead';
-            } else {
-                return 'Login instead';
             }
+            return 'Login instead';
         }
     },
     methods: {

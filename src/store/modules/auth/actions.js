@@ -49,7 +49,7 @@ export default {
         });
 
     },
-    async setUser(context, payload) {
+    setUser(context, payload) {
         context.commit('setUser', payload);
     },
     async registerUser(_, payload) {
@@ -123,10 +123,9 @@ export default {
             throw error;
         }
 
-
         context.commit('loadUser', responseData);
     },
-    async tryLogin(context) {
+    tryLogin(context) {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
         const tokenExpiration = localStorage.getItem('tokenExpiration');
@@ -147,8 +146,8 @@ export default {
                 userId: userId,
             });
 
-            await context.dispatch('loadUser');
-            await context.dispatch('game/loadGameHistory');
+            context.dispatch('loadUser');
+            context.dispatch('game/loadGameHistory');
         }
     },
     logout(context) {
@@ -165,6 +164,7 @@ export default {
             gameHistory: []
         });
 
+                
         context.dispatch('game/startNewGame');
     },
     autoLogout(context) {
