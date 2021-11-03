@@ -86,8 +86,9 @@ export default {
     },
     async loadGameHistory(context) {
         const userId = context.rootState.auth.userId;
+        const token = context.rootState.auth.token;
 
-        const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}/game-history.json`);
+        const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}/game-history.json?auth=${token}`);
         const responseData = await response.json();
 
         if (!response.ok) {
@@ -99,9 +100,10 @@ export default {
     },
     async setGameHistory(context) {
         const userId = context.rootState.auth.userId;
+        const token = context.rootState.auth.token;
 
         if (userId != null) {
-            const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}/game-history.json`, {
+            const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}/game-history.json?auth=${token}`, {
                 method: 'PUT',
                 body: JSON.stringify({
                     winner: context.rootState.game.gameHistory

@@ -53,7 +53,7 @@ export default {
         context.commit('setUser', payload);
     },
     async registerUser(_, payload) {
-        const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${payload.userId}.json?auth=` + payload.token, {
+        const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${payload.userId}.json?auth=${payload.token}`, {
             method: 'PUT',
             body: JSON.stringify({
                 name: payload.name,
@@ -114,8 +114,9 @@ export default {
     },
     async loadUser(context) {
         const userId = context.rootState.auth.userId;
+        const token = context.rootState.auth.token;
 
-        const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}.json`);
+        const response = await fetch(`https://monster-slayer-game-default-rtdb.firebaseio.com/users/${userId}.json?auth=${token}`);
         const responseData = await response.json();
 
         if (!response.ok) {
