@@ -1,4 +1,6 @@
-# vue-monster-slayer-game
+# Vue Monster Slayer Games
+
+> Monster Slayer game with Vue Router, Vuex, and Auth to store games. See demo: [https://monster-slayer-game.web.app/](https://monster-slayer-game.web.app/)
 
 ## Project setup
 ```
