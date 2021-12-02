@@ -57,4 +57,12 @@ button:disabled {
   color: #3f3f3f;
   cursor: not-allowed;
 }
+
+@media (max-width: 767px) {
+  button {
+    font-size: 12px;
+    margin: 5px;
+    width: 10rem;
+  }
+}
 </style>

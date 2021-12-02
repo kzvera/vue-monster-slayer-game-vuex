@@ -16,8 +16,10 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" v-model.trim="password">
             </div>
-            <button type="submit">{{authText}}</button>
-            <a @click="toggleAuthMode">{{altAuthText}}</a>
+            <div class="button-group">
+                <button type="submit">{{authText}}</button>
+                <a @click="toggleAuthMode">{{altAuthText}}</a>
+            </div>
         </form>
     </section>
 </template>
@@ -126,5 +128,13 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 </style>
